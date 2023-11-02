@@ -1,8 +1,6 @@
-package structures.problems;
+package problems;
 
 import structures.maps.MultiMap;
-
-import java.util.List;
 
 public class Problem_1 {
     public static void main(String[] args) throws Exception {

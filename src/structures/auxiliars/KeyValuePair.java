@@ -1,6 +1,6 @@
-package structures.auxiliar;
+package structures.auxiliars;
 
-import structures.utils.HashTableControl;
+import utils.HashTableControl;
 
 import java.util.Arrays;
 import java.util.Objects;

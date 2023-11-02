@@ -1,7 +1,7 @@
 package structures.maps;
 
-import structures.auxiliar.KeyValuePair;
-import structures.utils.HashTableControl;
+import structures.auxiliars.KeyValuePair;
+import utils.HashTableControl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
