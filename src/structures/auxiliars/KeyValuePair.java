@@ -5,10 +5,20 @@ import utils.HashTableControl;
 
 import java.util.*;
 
+/**
+ * Classe que vai representar cada par de chave-valor a ser utilizado no MultiMapa
+ *
+ * Utilizamos a mesma abordagem de Tabela Hash para guardar os valores associados à chave a fim de minimzar o custo e o tempo para operações de inserção e busca desses valores
+ * */
 public class KeyValuePair<TKey, TValue> extends HashUtils<TKey> {
+
+    //Referência para a chave
     private TKey key;
+
+    //Referência para os valores associados a essa chave em formato de Tabela Hash
     private List<TValue> values = new ArrayList<>();
 
+    //Construtor
     public KeyValuePair(TKey key) {
         this.key = key;
 
@@ -17,24 +27,36 @@ public class KeyValuePair<TKey, TValue> extends HashUtils<TKey> {
         }
     }
 
+    //Construtor
     public KeyValuePair(TKey key, TValue value, int index) throws Exception {
         this(key);
         this.put(value, index);
     }
 
+    //Construtor
     public KeyValuePair(TKey key, List<TValue> values) {
         this.key = key;
         this.values = values;
     }
 
+    //Getters
     public TKey getKey() {
         return key;
     }
 
+    //Getters
     public List<TValue> getValues() {
         return values;
     }
 
+    /**
+     * Put
+     *
+     * Utilizamos abordagem e verificações parecidas com o método Put do MultiMapa, já que ambas tratam de Hash Tables
+     *
+     * @param value representa o valor a ser associado à chave
+     * @param index representa a posição da Tabela Hash em que esse valor será inserido
+     * */
     public void put(TValue value, int index) throws Exception {
         if (this.contains(value)) {
             throw new Exception("Value already exists!");
@@ -55,7 +77,7 @@ public class KeyValuePair<TKey, TValue> extends HashUtils<TKey> {
                     index = getIndexByHashFunction(key, values.size(), increment);
                     increment++;
 
-                    if (originalIndex != index && increment > values.size() - 1) {
+                    if (originalIndex == index && increment > values.size() - 1) {
                         rehashing(increment);
                     }
                 }
@@ -64,6 +86,12 @@ public class KeyValuePair<TKey, TValue> extends HashUtils<TKey> {
         }
     }
 
+    /**
+     * Contains
+     *
+     * @param value representa o valor a ser buscado na Tabela Hash de valores associados à chave do par chave-valor
+     * @return um booleano se encontrou ou não o valor na Tabela Hash
+     * */
     private boolean contains(TValue value) {
         for (TValue v : values) {
             if (v != null && v.equals(value)) {
@@ -73,7 +101,13 @@ public class KeyValuePair<TKey, TValue> extends HashUtils<TKey> {
         return false;
     }
 
-
+    /**
+     * Rehashing
+     *
+     * Esse método redimensiona a tabela hash quando o fator de carga é maior que 0,75 ou caso não haja mais posições disponíveis para inserção de um elemento na tabela
+     *
+     * @param newLength: novo tamanho (que será dobrado) desejado para a tabela hash após o redimensionamento.
+     */
     @Override
     public void rehashing(int newLength) {
         newLength*=2;
@@ -106,5 +140,4 @@ public class KeyValuePair<TKey, TValue> extends HashUtils<TKey> {
                 ", Values: " + values +
                 '}';
     }
-
 }
