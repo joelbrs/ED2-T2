@@ -13,7 +13,7 @@ import java.util.*;
  *
  * OBS²: Utilizamos a mesma abordagem de Tabela Hash para guardar os valores associados à chave a fim de minimzar o custo e o tempo para operações de inserção e busca desses valores
  * */
-public class KeyValuePair<TKey, TValue> extends HashUtils<TKey> {
+public class KeyValuePair<TKey, TValue> extends HashUtils {
 
     //Referência para a chave
     private TKey key;

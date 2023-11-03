@@ -8,7 +8,7 @@ package utils;
  * OBS.: alguns métodos deixamos de maneira genérica porque vão ser utilizados nas duas classes
  *
  * */
-public abstract class HashUtils<TKey> {
+public abstract class HashUtils {
 
     /**
      * Rehashing
@@ -29,7 +29,7 @@ public abstract class HashUtils<TKey> {
      * @param length tamanho da tabela
      * @return retorna o resultado do cálculo da Função Hash
      * */
-    public int getIndexByHashFunction(TKey key, int length) {
+    public int getIndexByHashFunction(Object key, int length) {
         return Math.abs(key.hashCode() % length);
     }
 
@@ -43,7 +43,7 @@ public abstract class HashUtils<TKey> {
      * @param increment incremento
      * @return o mesmo do método anterior
      * */
-    public int getIndexByHashFunction(TKey key, int length, int increment) {
+    public int getIndexByHashFunction(Object key, int length, int increment) {
         return Math.abs((key.hashCode() + increment) % length);
     }
 

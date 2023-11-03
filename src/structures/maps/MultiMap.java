@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
  * A primeira se trata de uma classe abstrata utilizada para padronizar alguns comportamentos da Tabela Hash que foram implementadas tanto na classe corrente,
  * quanto na de Par Chave-Valor.
  * */
-public class MultiMap<TKey, TValue> extends HashUtils<TKey> {
+public class MultiMap<TKey, TValue> extends HashUtils {
 
     //Lista de pares de chave-valor (representação da Hash Table)
     private KeyValuePair[] pairs;
