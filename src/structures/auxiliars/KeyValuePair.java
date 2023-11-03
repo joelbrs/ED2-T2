@@ -1,102 +1,135 @@
 package structures.auxiliars;
 
+import utils.HashUtils;
 import utils.HashTableControl;
 
-import java.util.Arrays;
-import java.util.Objects;
+import java.util.*;
 
-public class KeyValuePair<TKey, TValue> {
+/**
+ * Classe que vai representar cada par de chave-valor a ser utilizado no MultiMapa
+ *
+ * OBS¹.: Antes de verificar essa classe mais adiante, dê uma olhada na classe HashUtils, uma classe abstrata utilizada para padronizar alguns comportamentos da Tabela Hash
+ * que foram implementadas tanto na classe corrente, quanto na de MultiMapa.
+ *
+ * OBS²: Utilizamos a mesma abordagem de Tabela Hash para guardar os valores associados à chave a fim de minimzar o custo e o tempo para operações de inserção e busca desses valores
+ * */
+public class KeyValuePair<TKey, TValue> extends HashUtils {
+
+    // Referência para a chave
     private TKey key;
-    private TValue[] values;
-    private Integer valuesLength = HashTableControl.DEFAULT_LENGTH;
 
+    // Referência para os valores associados a essa chave em formato de array
+    private TValue[] values;
+
+    // Construtor
     public KeyValuePair(TKey key) {
         this.key = key;
-        this.values = (TValue[]) new Object[valuesLength];
+        this.values = (TValue[]) new Object[HashTableControl.DEFAULT_LENGTH];
     }
 
-    public KeyValuePair(TKey key, TValue value) {
+    // Construtor
+    public KeyValuePair(TKey key, TValue value, int index) throws Exception {
+        this(key);
+        this.put(value, index);
+    }
+
+    // Construtor
+    public KeyValuePair(TKey key, TValue[] values) {
         this.key = key;
-        this.values = (TValue[]) new Object[valuesLength];
-        this.add(0, value);
+        this.values = values;
     }
 
-    public KeyValuePair(TKey key, int valuesLength) {
-        this.key = key;
-        this.valuesLength = valuesLength;
-        this.values = (TValue[]) new Object[valuesLength];
-    }
-
+    // Getter para a chave
     public TKey getKey() {
         return key;
     }
 
-    public void setKey(TKey key) {
-        this.key = key;
-    }
-
+    // Getter para os valores
     public TValue[] getValues() {
         return values;
     }
 
-    public void setValues(TValue[] values) {
-        this.values = values;
-    }
+    /**
+     * Método para adicionar um valor associado à chave em uma posição específica.
+     *
+     * @param value representa o valor a ser associado à chave
+     * @param index representa a posição da Tabela Hash em que esse valor será inserido
+     * @throws Exception se o valor já existir
+     * */
+    public void put(TValue value, int index) throws Exception {
+        if (this.contains(value)) {
+            throw new Exception("Value already exists!");
+        }
 
-    public Integer getValuesLength() {
-        return valuesLength;
-    }
-
-    public void setValuesLength(Integer valuesLength) {
-        this.valuesLength = valuesLength;
-    }
-
-    public boolean contains(int index, TValue value) {
         if (index >= 0 && value != null) {
-            for (TValue v : getValues()) {
-                if (v != null && v.equals(value)) {
-                    return true;
+            if (getLoadFactor(values, values.length) > 0.75) {
+                resizeToDouble(values.length);
+            }
+
+            if (index >= values.length) {
+                rehashing(index);
+            }
+
+            if (values[index] != null) {
+                int increment = 1, originalIndex = index;
+                while (values[index] != null) {
+                    index = getIndexByHashFunction(key, values.length, increment);
+                    increment++;
+
+                    if (originalIndex == index && increment > values.length - 1) {
+                        rehashing(increment);
+                    }
                 }
             }
-            return false;
+            values[index] = value;
         }
-
-        throw new IllegalArgumentException();
     }
 
-    public void add(int index, TValue value) {
-        while (values[index] != null) {
-            if (index > valuesLength) {
-                resize(index);
+    /**
+     * Método para verificar se um valor existe nos valores associados à chave.
+     *
+     * @param value representa o valor a ser buscado na Tabela Hash de valores associados à chave do par chave-valor
+     * @return um booleano se encontrou ou não o valor na Tabela Hash
+     * */
+    private boolean contains(TValue value) {
+        for (TValue v : values) {
+            if (v != null && v.equals(value)) {
+                return true;
             }
-            index++;
         }
-        values[index] = value;
-    }
-
-    public void resize(int valuesLength) {
-        this.valuesLength = valuesLength;
-        values = Arrays.copyOf(values, valuesLength);
+        return false;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        KeyValuePair<?, ?> that = (KeyValuePair<?, ?>) o;
-        return Objects.equals(key, that.key);
-    }
+    public void rehashing(int newLength) {
+        newLength *= 2;
+        TValue[] newValues = (TValue[]) new Object[newLength];
+        int increment = 1;
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(key);
+        for (int i = 0; i < values.length; i++) {
+            if (values[i] != null) {
+                int index = getIndexByHashFunction(key, newLength);
+
+                while (newValues[index] != null) {
+                    index = getIndexByHashFunction(key, newLength, increment);
+                    increment++;
+                }
+
+                newValues[index] = values[i];
+            } else {
+                newValues[i] = null;
+            }
+        }
+
+        values = newValues;
     }
 
     @Override
     public String toString() {
-        return "{" +
-                " key: " + key +
-                ", valores: " + Arrays.toString(values) +
+        return "\nKeyValuePair: {" +
+                "Key: " + key +
+                ", Length: " + values.length +
+                ", Values: " + Arrays.toString(values) +
                 '}';
     }
 }

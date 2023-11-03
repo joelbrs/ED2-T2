@@ -2,35 +2,39 @@ package problems;
 
 import structures.maps.MultiMap;
 
+import java.util.Arrays;
+import java.util.Random;
+
 public class Problem_1 {
     public static void main(String[] args) throws Exception {
+        /**
+         * Implemente uma estrutura de dados que permite que vários valores sejam associados à
+         * mesma chave. Essa estrutura é chamada de multimapa. Ela deve ter um método put (k, v),
+         * que insere um item com a chave k e valor v mesmo se já houver um item com a chave k (mas
+         * não o mesmo par de valor-chave) e um método FindAll (k), que retorna todos os valores que
+         * possuem a chave k. Sua estrutura deve executar o método put (k, v) no tempo O (1) e o
+         * método FindAll (k) seja executado no tempo O (1 + v), onde v é o número de valores com
+         * chave k. OBS: Você só pode utilizar as estruturas estudadas na segunda unidade (Hash e
+         * Árvores).
+         */
 
-        /*
-        *
-        *   Implemente uma estrutura de dados que permite que vários valores sejam associados à
-        *   mesma chave. Essa estrutura é chamada de multimapa. Ela deve ter um método put (k, v),
-        *   que insere um item com a chave k e valor v mesmo se já houver um item com a chave k (mas
-        *   não o mesmo par de valor-chave).
-        *
-        * */
+        MultiMap<String, Integer> multiMap = new MultiMap<>();
+        Random random = new Random();
 
-        /*
-        *
-        * Exemplo 1: put (“a”, 1), put (“b”, 2), put (“a”, 3), put (“c”, 4), put (“b”, 5), put (“a”, 6)
-        * Espera-se que o multimapa contenha os seguintes itens: (“a”, 1), (“b”, 2), (“a”, 3), (“c”, 4), (“b”, 5), (“a”, 6)
-        * Espera-se que o multimapa mantenha a ordem de inserção dos itens com a mesma chave: “a” -> [1, 3, 6], “b” -> [2, 5], “c” -> [4]
-        * Espera-se que o multimapa permita recuperar todos os valores associados a uma chave: get (“a”) -> [1, 3, 6], get (“b”) -> [2, 5], get (“c”) -> [4], get (“d”) -> null
-        *
-        * */
+        for (int i = 1; i <= 8; i++) {
+            String chave = "chave" + i;
+            for (int j = 1; j <= 6; j++) {
+                int valor = random.nextInt(1000); // Gera um número aleatório entre 0 e 999
+                try {
+                    multiMap.put(chave, valor);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
 
-        MultiMap<String, Integer> multimap = new MultiMap<>();
-        multimap.put("a", 1);
-        multimap.put("b", 2);
-        multimap.put("a", 3);
-        multimap.put("c", 4);
-        multimap.put("b", 5);
-        multimap.put("a", 6);
-
-        System.out.println(multimap);
+        System.out.println(multiMap);
+        System.out.println("Key: chave1 ->" + Arrays.toString(multiMap.findAll("chave1")));
+        System.out.println("Key: chave5 ->" + Arrays.toString(multiMap.findAll("chave5")));
     }
 }
