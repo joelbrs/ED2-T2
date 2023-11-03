@@ -15,50 +15,46 @@ import java.util.*;
  * */
 public class KeyValuePair<TKey, TValue> extends HashUtils {
 
-    //Referência para a chave
+    // Referência para a chave
     private TKey key;
 
-    //Referência para os valores associados a essa chave em formato de Tabela Hash
-    private List<TValue> values = new ArrayList<>();
+    // Referência para os valores associados a essa chave em formato de array
+    private TValue[] values;
 
-    //Construtor
+    // Construtor
     public KeyValuePair(TKey key) {
         this.key = key;
-
-        for (int i = 0; i < HashTableControl.DEFAULT_LENGTH; i++) {
-            values.add(null);
-        }
+        this.values = (TValue[]) new Object[HashTableControl.DEFAULT_LENGTH];
     }
 
-    //Construtor
+    // Construtor
     public KeyValuePair(TKey key, TValue value, int index) throws Exception {
         this(key);
         this.put(value, index);
     }
 
-    //Construtor
-    public KeyValuePair(TKey key, List<TValue> values) {
+    // Construtor
+    public KeyValuePair(TKey key, TValue[] values) {
         this.key = key;
         this.values = values;
     }
 
-    //Getters
+    // Getter para a chave
     public TKey getKey() {
         return key;
     }
 
-    //Getters
-    public List<TValue> getValues() {
+    // Getter para os valores
+    public TValue[] getValues() {
         return values;
     }
 
     /**
-     * Put
-     *
-     * Utilizamos abordagem e verificações parecidas com o método Put do MultiMapa, já que ambas tratam de Hash Tables
+     * Método para adicionar um valor associado à chave em uma posição específica.
      *
      * @param value representa o valor a ser associado à chave
      * @param index representa a posição da Tabela Hash em que esse valor será inserido
+     * @throws Exception se o valor já existir
      * */
     public void put(TValue value, int index) throws Exception {
         if (this.contains(value)) {
@@ -66,31 +62,31 @@ public class KeyValuePair<TKey, TValue> extends HashUtils {
         }
 
         if (index >= 0 && value != null) {
-            if (getLoadFactor(values.toArray(), values.size()) > 0.75) {
-                resizeToDouble(values.size());
+            if (getLoadFactor(values, values.length) > 0.75) {
+                resizeToDouble(values.length);
             }
 
-            if (index >= values.size()) {
+            if (index >= values.length) {
                 rehashing(index);
             }
 
-            if (values.get(index) != null) {
+            if (values[index] != null) {
                 int increment = 1, originalIndex = index;
-                while (values.get(index) != null) {
-                    index = getIndexByHashFunction(key, values.size(), increment);
+                while (values[index] != null) {
+                    index = getIndexByHashFunction(key, values.length, increment);
                     increment++;
 
-                    if (originalIndex == index && increment > values.size() - 1) {
+                    if (originalIndex == index && increment > values.length - 1) {
                         rehashing(increment);
                     }
                 }
             }
-            values.set(index, value);
+            values[index] = value;
         }
     }
 
     /**
-     * Contains
+     * Método para verificar se um valor existe nos valores associados à chave.
      *
      * @param value representa o valor a ser buscado na Tabela Hash de valores associados à chave do par chave-valor
      * @return um booleano se encontrou ou não o valor na Tabela Hash
@@ -104,15 +100,14 @@ public class KeyValuePair<TKey, TValue> extends HashUtils {
         return false;
     }
 
-
     @Override
     public void rehashing(int newLength) {
-        newLength*=2;
+        newLength *= 2;
         TValue[] newValues = (TValue[]) new Object[newLength];
         int increment = 1;
 
-        for (int i = 0; i < values.size(); i++) {
-            if (values.get(i) != null) {
+        for (int i = 0; i < values.length; i++) {
+            if (values[i] != null) {
                 int index = getIndexByHashFunction(key, newLength);
 
                 while (newValues[index] != null) {
@@ -120,21 +115,21 @@ public class KeyValuePair<TKey, TValue> extends HashUtils {
                     increment++;
                 }
 
-                newValues[index] = values.get(i);
+                newValues[index] = values[i];
             } else {
                 newValues[i] = null;
             }
         }
 
-        values = Arrays.asList(newValues);
+        values = newValues;
     }
 
     @Override
     public String toString() {
         return "\nKeyValuePair: {" +
                 "Key: " + key +
-                ", Length: " + values.size() +
-                ", Values: " + values +
+                ", Length: " + values.length +
+                ", Values: " + Arrays.toString(values) +
                 '}';
     }
 }

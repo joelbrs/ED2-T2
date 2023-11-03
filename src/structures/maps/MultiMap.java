@@ -5,8 +5,6 @@ import utils.HashUtils;
 import utils.HashTableControl;
 
 import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * MultiMapa
@@ -22,16 +20,11 @@ public class MultiMap<TKey, TValue> extends HashUtils {
     //Lista de pares de chave-valor (representação da Hash Table)
     private KeyValuePair[] pairs;
 
-
-    //Tamanho da Hash Table com o padrão especificado pela variável DEFAULT_LENGTH da classe de controle HashTableControl
-    private Integer length = HashTableControl.DEFAULT_LENGTH;
-
     public MultiMap() {
-        this.pairs = new KeyValuePair[length];
+        this.pairs = new KeyValuePair[HashTableControl.DEFAULT_LENGTH];
     }
 
     public MultiMap(int length) {
-        this.length = length;
         this.pairs = new KeyValuePair[length];
     }
 
@@ -56,14 +49,14 @@ public class MultiMap<TKey, TValue> extends HashUtils {
              * originalIndex: variável que guarda o mesmo valor da posição inicial de inserção do valor na tabela, utilizamos para controle
              *
              * */
-            int index = getIndexByHashFunction(key, length), increment = 1, originalIndex = index;
+            int index = getIndexByHashFunction(key, pairs.length), increment = 1, originalIndex = index;
 
             /*
              * verifica se o fator de carga da Hash Table atual está acima de 0,75 para efetuar o redimensionamento
              * para o dobro de tamanho a fim de diminuir possíveis colisões
              * */
-            if (getLoadFactor(pairs, length) > 0.75) {
-                resizeToDouble(length);
+            if (getLoadFactor(pairs, pairs.length) > 0.75) {
+                resizeToDouble(pairs.length);
             }
 
             //verificando se na posição calculada já existe um elemento
@@ -74,14 +67,14 @@ public class MultiMap<TKey, TValue> extends HashUtils {
                  * o elemento na chave já existente
                  * */
                 while (pairs[index] != null && !pairs[index].getKey().equals(key)) {
-                    index = getIndexByHashFunction(key, length, increment);
+                    index = getIndexByHashFunction(key, pairs.length, increment);
                     increment++;
 
                     /*
                      * Verificando se a posição atual (posição inicial incrementada) é diferente da posição inicial (em outros termos, se já passamos por todos os elementos
                      * da Tabela Hash e, ainda assim, não encontramos espaço disponível), então, redimensionamos a Tabela Hash
                      */
-                    if (originalIndex == index && increment > length - 1) {
+                    if (originalIndex == index && increment > pairs.length - 1) {
                         rehashing(increment);
                     }
                 }
@@ -114,21 +107,21 @@ public class MultiMap<TKey, TValue> extends HashUtils {
      * @return Uma lista de valores associados à chave
      * @throws Exception Se a chave fornecida for nula ou se a chave não existir na tabela
      */
-    public List<TValue> findAll(TKey key) throws Exception {
+    public TValue[] findAll(TKey key) throws Exception {
         if (key != null) {
             // Obtendo o índice correspondente à chave
-            int index = getIndexByHashFunction(key, length), increment = 1;
+            int index = getIndexByHashFunction(key, pairs.length), increment = 1;
 
             if (pairs[index] != null) {
                 // Iterando até encontrar a chave ou uma posição vazia
                 while (pairs[index] != null && !pairs[index].getKey().equals(key)) {
-                    index = getIndexByHashFunction(key, length, increment);
+                    index = getIndexByHashFunction(key, pairs.length, increment);
                     increment++;
                 }
 
                 if (pairs[index] != null) {
                     // Filtrando valores não nulos e retornando como lista
-                    return (List<TValue>) pairs[index].getValues().stream().filter(v -> v != null).collect(Collectors.toList());
+                    return (TValue[]) pairs[index].getValues();
                 }
             }
             throw new Exception("Essa chave não existe!");
@@ -146,7 +139,7 @@ public class MultiMap<TKey, TValue> extends HashUtils {
         int increment = 1;
 
         // Iterando sobre os pares na tabela hash original
-        for (int i = 0; i < length; i++) {
+        for (int i = 0; i < pairs.length; i++) {
             if (pairs[i] != null) {
                 // Calculando o novo índice para o par chave-valor
                 int index = getIndexByHashFunction((TKey) pairs[i].getKey(), newLength);
@@ -165,8 +158,7 @@ public class MultiMap<TKey, TValue> extends HashUtils {
             }
         }
 
-        // Atualizando o tamanho e os pares da tabela hash original
-        length = newLength;
+        // Atualizando os pares da tabela hash original
         pairs = newPairs;
     }
 
@@ -174,7 +166,7 @@ public class MultiMap<TKey, TValue> extends HashUtils {
     @Override
     public String toString() {
         return  "MultiMap: {"
-                + "Length: " + length
+                + "Length: " + pairs.length
                 + ", Pairs: " + Arrays.toString(pairs)
                 + '}';
     }
