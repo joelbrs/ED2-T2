@@ -8,7 +8,10 @@ import java.util.*;
 /**
  * Classe que vai representar cada par de chave-valor a ser utilizado no MultiMapa
  *
- * Utilizamos a mesma abordagem de Tabela Hash para guardar os valores associados à chave a fim de minimzar o custo e o tempo para operações de inserção e busca desses valores
+ * OBS¹.: Antes de verificar essa classe mais adiante, dê uma olhada na classe HashUtils, uma classe abstrata utilizada para padronizar alguns comportamentos da Tabela Hash
+ * que foram implementadas tanto na classe corrente, quanto na de MultiMapa.
+ *
+ * OBS²: Utilizamos a mesma abordagem de Tabela Hash para guardar os valores associados à chave a fim de minimzar o custo e o tempo para operações de inserção e busca desses valores
  * */
 public class KeyValuePair<TKey, TValue> extends HashUtils<TKey> {
 
@@ -101,13 +104,7 @@ public class KeyValuePair<TKey, TValue> extends HashUtils<TKey> {
         return false;
     }
 
-    /**
-     * Rehashing
-     *
-     * Esse método redimensiona a tabela hash quando o fator de carga é maior que 0,75 ou caso não haja mais posições disponíveis para inserção de um elemento na tabela
-     *
-     * @param newLength: novo tamanho (que será dobrado) desejado para a tabela hash após o redimensionamento.
-     */
+
     @Override
     public void rehashing(int newLength) {
         newLength*=2;

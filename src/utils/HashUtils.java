@@ -1,7 +1,9 @@
 package utils;
 
 /**
- * Possui métodos que serão implementados/utilizados tanto no MultiMap quanto no KeyValuePair
+ * HashUtils
+ *
+ * Possui métodos que serão implementados/utilizados tanto no MultiMap quanto no KeyValuePair a fim de padronizar os comportamentos dessas Tabelas Hash
  *
  * OBS.: alguns métodos deixamos de maneira genérica porque vão ser utilizados nas duas classes
  *
@@ -9,36 +11,51 @@ package utils;
 public abstract class HashUtils<TKey> {
 
     /**
-    * Assinatura do método de rehashing, que será utilizado quando:
-    *   1 - o fator de carga das tabelas hash for superior a 0,75
-    *   2 - quando percorrermos toda a tabela e ainda assim não tivermos espaço para adicionar na tabela
-    *
-    * Basicamente, a implementação vai consistir em:
-    *   1 - aumentar o tamanho da tabela hash no dobro do que foi passado no parâmetro do método:
-    *   2 - calcular as novas posições dos elementos presentes na tabela anterior
-    * */
+     * Rehashing
+     *
+     * Assinatura do método que redimensiona a tabela hash quando o fator de carga é maior que 0,75 ou caso não haja mais posições disponíveis para inserção de um elemento na tabela
+     *
+     * @param newLength: novo tamanho (que será dobrado) desejado para a tabela hash após o redimensionamento.
+     */
     public abstract void rehashing(int newLength);
 
 
     /**
-    * Implementação genérica do método p/ calcular a Função Hash
-    * */
+     * GetIndexByHashFunction
+     *
+     * Método genérico que calcula a Função Hash a partir da chave e do tamanho da tabela a fim de determinar sua posição de inserção/remoção/busca
+     *
+     * @param key chave a ser utilizada para calcular a posição da tabela
+     * @param length tamanho da tabela
+     * @return retorna o resultado do cálculo da Função Hash
+     * */
     public int getIndexByHashFunction(TKey key, int length) {
         return Math.abs(key.hashCode() % length);
     }
 
 
     /**
-    * Implementação genérica do método p/ calcular a Função Hash com um incremento (usado p/ tratar colisões)
-    * */
+     * GetIndexByHashFunction (Sobrecarga)
+     *
+     * Versão que possui um parâmetro a mais de incremento, utilizado para tratar de colisões
+     *
+     * @param os mesmos do método anterior
+     * @param increment incremento
+     * @return o mesmo do método anterior
+     * */
     public int getIndexByHashFunction(TKey key, int length, int increment) {
         return Math.abs((key.hashCode() + increment) % length);
     }
 
-
     /**
-    * Implementação Genérica do cálculo do Fator de Carga da Tabela Hash
-    * */
+     * GetLoadFactor
+     *
+     * Método genérico que calcula o Fator de Carga de uma determinada função hash
+     *
+     * @params o representa a tabela hash
+     * @params length representa o tamanho da tabela hash
+     * @return retorna o valor resultante da operação de cálculo do Fator de Carga
+     * */
     public double getLoadFactor(Object[] o, int length) {
         int sum = 0;
         for (var item: o) {
@@ -52,8 +69,12 @@ public abstract class HashUtils<TKey> {
 
 
     /**
-    * Implementação genérica mais semântica de um redimensionamento do dobro de tamanho da Tabela Hash
-    * */
+     * ResizeToDouble
+     *
+     * Método genérico que faz uma chamada para o Rehashing, a fim de duplicar o tamanho da Tabela Hash
+     *
+     * @param length representa o tamanho da tabela
+     * */
     public void resizeToDouble(int length) {
         rehashing(length);
     }

@@ -8,6 +8,15 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * MultiMapa
+ *
+ * Representa o MultiMapa desenvolvido
+ *
+ * OBS.: Antes de verificar essa classe mais adiante, dê uma olhada nas classes HashUtils e Par Chave-Valor no pacote utils e structures.auxiliars, respectivamente.
+ * A primeira se trata de uma classe abstrata utilizada para padronizar alguns comportamentos da Tabela Hash que foram implementadas tanto na classe corrente,
+ * quanto na de Par Chave-Valor.
+ * */
 public class MultiMap<TKey, TValue> extends HashUtils<TKey> {
 
     //Lista de pares de chave-valor (representação da Hash Table)
@@ -127,14 +136,6 @@ public class MultiMap<TKey, TValue> extends HashUtils<TKey> {
         throw new IllegalArgumentException("A chave não pode ser nula!");
     }
 
-
-    /**
-     * Rehashing
-     *
-     * Esse método redimensiona a tabela hash quando o fator de carga é maior que 0,75 ou caso não haja mais posições disponíveis para inserção de um elemento na tabela
-     *
-     * @param newLength: novo tamanho (que será dobrado) desejado para a tabela hash após o redimensionamento.
-     */
     @Override
     public void rehashing(int newLength) {
         // Dobrando o tamanho para garantir espaço suficiente
