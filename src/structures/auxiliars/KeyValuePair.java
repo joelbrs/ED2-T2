@@ -2,101 +2,62 @@ package structures.auxiliars;
 
 import utils.HashTableControl;
 
-import java.util.Arrays;
-import java.util.Objects;
+import java.util.*;
 
 public class KeyValuePair<TKey, TValue> {
     private TKey key;
-    private TValue[] values;
-    private Integer valuesLength = HashTableControl.DEFAULT_LENGTH;
+    private List<TValue> values = new ArrayList<>();
 
     public KeyValuePair(TKey key) {
         this.key = key;
-        this.values = (TValue[]) new Object[valuesLength];
+
+        for (int i = 0; i < HashTableControl.DEFAULT_LENGTH; i++) {
+            values.add(null);
+        }
     }
 
-    public KeyValuePair(TKey key, TValue value) {
-        this.key = key;
-        this.values = (TValue[]) new Object[valuesLength];
-        this.add(0, value);
-    }
-
-    public KeyValuePair(TKey key, int valuesLength) {
-        this.key = key;
-        this.valuesLength = valuesLength;
-        this.values = (TValue[]) new Object[valuesLength];
+    public KeyValuePair(TKey key, TValue value, int index) throws Exception {
+        this(key);
+        this.put(value, index);
     }
 
     public TKey getKey() {
         return key;
     }
 
-    public void setKey(TKey key) {
-        this.key = key;
-    }
-
-    public TValue[] getValues() {
-        return values;
-    }
-
-    public void setValues(TValue[] values) {
-        this.values = values;
-    }
-
-    public Integer getValuesLength() {
-        return valuesLength;
-    }
-
-    public void setValuesLength(Integer valuesLength) {
-        this.valuesLength = valuesLength;
-    }
-
-    public boolean contains(int index, TValue value) {
-        if (index >= 0 && value != null) {
-            for (TValue v : getValues()) {
-                if (v != null && v.equals(value)) {
-                    return true;
-                }
-            }
-            return false;
+    public void put(TValue value, int index) throws Exception {
+        if (this.contains(value)) {
+            throw new Exception("Value already exists!");
         }
 
-        throw new IllegalArgumentException();
-    }
-
-    public void add(int index, TValue value) {
-        while (values[index] != null) {
-            if (index > valuesLength) {
-                resize(index);
-            }
-            index++;
+        if (index >= values.size()) {
+            resize(index);
         }
-        values[index] = value;
+
+        values.add(index, value);
     }
 
-    public void resize(int valuesLength) {
-        this.valuesLength = valuesLength;
-        values = Arrays.copyOf(values, valuesLength);
+    private boolean contains(TValue value) {
+        for (TValue v : values) {
+            if (v != null && v.equals(value)) {
+                return true;
+            }
+        }
+        return false;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        KeyValuePair<?, ?> that = (KeyValuePair<?, ?>) o;
-        return Objects.equals(key, that.key);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(key);
+    private void resize(int newLength) {
+        for (int i = values.size(); i < newLength; i++) {
+            values.add(null);
+        }
     }
 
     @Override
     public String toString() {
-        return "{" +
-                " key: " + key +
-                ", valores: " + Arrays.toString(values) +
+        return "KeyValuePair{" +
+                "key=" + key +
+                ", values=" + values.toString() +
+                " length=" + values.size() +
                 '}';
     }
 }

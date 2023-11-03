@@ -3,9 +3,7 @@ package structures.maps;
 import structures.auxiliars.KeyValuePair;
 import utils.HashTableControl;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 /*
  *   REQUISITOS:
@@ -16,7 +14,6 @@ import java.util.List;
  *
  * */
 public class MultiMap<TKey, TValue> {
-
     private KeyValuePair[] pairs;
     private Integer length = HashTableControl.DEFAULT_LENGTH;
 
@@ -29,61 +26,37 @@ public class MultiMap<TKey, TValue> {
         this.pairs = new KeyValuePair[length];
     }
 
-    public void put(TKey key, TValue value) throws Exception{
+    public void put(TKey key, TValue value) throws Exception {
         if (key != null && value != null) {
-            var index = getIndexByHashFunction(key);
+            int index = getIndexByHashFunction(key), increment = 1;
 
-            while (pairs[index] != null) {
-                if (index > length) {
-                    resize(index);
+            if (pairs[index] != null) {
+                while (!pairs[index].getKey().equals(key) && index < length) {
+                    index = getIndexByHashFunction(key, increment);
+                    increment++;
                 }
-
-                if (pairs[index].getKey().equals(key)) {
-                    if (pairs[index].contains(index, value)) {
-                        throw new Exception("Value Already Exists!");
-                    }
-                    pairs[index].add(index, value);
-                }
-                index++;
+                pairs[index].put(value, index);
+                return;
             }
-
-            pairs[index] = new KeyValuePair(key, value);
+            pairs[index] = new KeyValuePair(key, value, index);
             return;
         }
         throw new IllegalArgumentException();
     }
 
-    public List<TValue> findAll(TKey key) throws Exception{
-        var index = getIndexByHashFunction(key);
-
-        if (pairs[index] != null) {
-            List<TValue> values = new ArrayList<>();
-            while (!pairs[index].getKey().equals(key)) {
-                index++;
-            }
-
-            for (TValue v : (TValue[]) pairs[index].getValues()) {
-                values.add(v);
-            }
-            return values;
-        }
-
-        throw new Exception("Key does not exists!");
-    }
-
-    public int getIndexByHashFunction(TKey key) {
+    private int getIndexByHashFunction(TKey key) {
         return Math.abs(key.hashCode() % length);
     }
 
-    public void resize(int length) {
-        this.length = length;
-        pairs = Arrays.copyOf(pairs, length);
+    private int getIndexByHashFunction(TKey key, int increment) {
+        return Math.abs((key.hashCode() + increment) % length);
     }
 
     @Override
     public String toString() {
-        return "MultiMap:" +
-                "Pares de Chave-Valor:" + Arrays.toString(pairs) +
-                "\n";
+        return "MultiMap{" +
+                "pairs=" + Arrays.toString(pairs) +
+                ", length=" + length +
+                '}';
     }
 }
