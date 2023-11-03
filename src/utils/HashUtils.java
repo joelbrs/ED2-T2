@@ -1,14 +1,12 @@
 package utils;
 
+/**
+ * Possui métodos que serão implementados/utilizados tanto no MultiMap quanto no KeyValuePair
+ *
+ * OBS.: alguns métodos deixamos de maneira genérica porque vão ser utilizados nas duas classes
+ *
+ * */
 public abstract class HashUtils<TKey> {
-    /**
-    *
-    * Possui métodos que serão implementados/utilizados tanto no MultiMap quanto no KeyValuePair
-    *
-    * OBS.: alguns métodos deixamos de maneira genérica porque vão ser utilizados nas duas classes
-    *
-    * */
-
 
     /**
     * Assinatura do método de rehashing, que será utilizado quando:
