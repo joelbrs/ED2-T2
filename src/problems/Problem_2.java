@@ -24,13 +24,13 @@ public class Problem_2 {
 
     private static final String PLAGED_FILE_PATH = "src/reports/problem_2/solution/PlagedFileLoremIpsum.txt";
     private static final String EMPTY_FILE_PATH = "src/reports/problem_2/solution/EmptyFile.txt";
-    private static final String NOT_PLAGED_FILE_PATH = "src/reports/problem_2/solution/EmptyFile.txt";
+    private static final String NOT_PLAGED_FILE_PATH = "src/reports/problem_2/solution/DifferenteFileLoremIpsum.txt";
 
     public static void main(String[] args) throws IOException {
 
         // Resultados da Implementação com Árvore Rubro-Negra
-        ReportsGenerator.generate(PlagiarismChecker.RBTreeChecker(PLAGED_FILE_PATH).toString(), "Verificador de Plágio (Arquivo Plageado)", ReportsGenerator.PROBLEM_2_REPORTS_PATH);
-        ReportsGenerator.generate(PlagiarismChecker.RBTreeChecker(EMPTY_FILE_PATH).toString(), "Verificador de Plágio (Arquivo Vazio)", ReportsGenerator.PROBLEM_2_REPORTS_PATH);
-        ReportsGenerator.generate(PlagiarismChecker.RBTreeChecker(NOT_PLAGED_FILE_PATH).toString(), "Verificador de Plágio (Arquivo Não Plageado)", ReportsGenerator.PROBLEM_2_REPORTS_PATH);
+        ReportsGenerator.generate(PlagiarismChecker.RBTreeChecker(PLAGED_FILE_PATH, 40).toString(), "Verificador de Plágio (Arquivo Plageado)", ReportsGenerator.PROBLEM_2_REPORTS_PATH);
+        ReportsGenerator.generate(PlagiarismChecker.RBTreeChecker(EMPTY_FILE_PATH, 9).toString(), "Verificador de Plágio (Arquivo Vazio)", ReportsGenerator.PROBLEM_2_REPORTS_PATH);
+        ReportsGenerator.generate(PlagiarismChecker.RBTreeChecker(NOT_PLAGED_FILE_PATH, 900).toString(), "Verificador de Plágio (Arquivo Não Plageado)", ReportsGenerator.PROBLEM_2_REPORTS_PATH);
     }
 }
