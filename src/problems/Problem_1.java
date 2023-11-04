@@ -1,6 +1,7 @@
 package problems;
 
 import structures.maps.MultiMap;
+import utils.ReportsGenerator;
 
 import java.util.Arrays;
 import java.util.Random;
@@ -33,8 +34,9 @@ public class Problem_1 {
             }
         }
 
-        System.out.println(multiMap);
-        System.out.println("Key: chave1 ->" + Arrays.toString(multiMap.findAll("chave1")));
-        System.out.println("Key: chave5 ->" + Arrays.toString(multiMap.findAll("chave5")));
+        ReportsGenerator.generate(multiMap.toString(), "MultiMapa", ReportsGenerator.PROBLEM_1_REPORTS_PATH);
+        ReportsGenerator.generate(Arrays.toString(multiMap.findAll("chave1")), "PairKeyValue, Key: Chave1", ReportsGenerator.PROBLEM_1_REPORTS_PATH);
+        ReportsGenerator.generate(Arrays.toString(multiMap.findAll("chave5")), "PairKeyValue, Key: Chave5", ReportsGenerator.PROBLEM_1_REPORTS_PATH);
+        ReportsGenerator.generate(Arrays.toString(multiMap.findAll("chave15")), "PairKeyValue, Key: Chave15", ReportsGenerator.PROBLEM_1_REPORTS_PATH);
     }
 }
