@@ -15,7 +15,7 @@ public class ReportsGenerator {
      * Constantes referenciando o pacote de pacotes de cada problema resolvido
      * */
     public static final String PROBLEM_1_REPORTS_PATH = "src/reports/problem_1/";
-    public static final String PROBLEM_2_REPORTS_PATH = "src/reports/problem_2/";
+    public static final String PROBLEM_2_REPORTS_PATH = "src/reports/problem_2/results/";
 
 
     /**

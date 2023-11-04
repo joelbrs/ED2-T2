@@ -58,7 +58,7 @@ public class KeyValuePair<TKey, TValue> extends HashUtils {
      * */
     public void put(TValue value, int index) throws Exception {
         if (this.contains(value)) {
-            throw new Exception("Value already exists!");
+            throw new Exception("O valor já está associado à chave!");
         }
 
         if (index >= 0 && value != null) {

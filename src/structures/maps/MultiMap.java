@@ -9,7 +9,7 @@ import java.util.Arrays;
 /**
  * MultiMapa
  *
- * Representa o MultiMapa desenvolvido
+ * Representa o MultiMapa (Dinâmico) desenvolvido
  *
  * OBS.: Antes de verificar essa classe mais adiante, dê uma olhada nas classes HashUtils e Par Chave-Valor no pacote utils e structures.auxiliars, respectivamente.
  * A primeira se trata de uma classe abstrata utilizada para padronizar alguns comportamentos da Tabela Hash que foram implementadas tanto na classe corrente,
