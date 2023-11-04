@@ -26,7 +26,7 @@ public class PlagiarismChecker {
      * @param m representa a quantidade de palavras iguais consecutivas que sera utilizado para verificacao de plagio
      * @return PlagedFile representa uma estrutura de arquivo possivelmente plageado, onde possui um booleano para tal e o trecho de plagio
      * */
-    public static PlagedFile RBTreeChecker(String path, Integer m) throws IOException {
+    public static PlagedFile RBTreeChecker(String path) throws IOException {
         // Carregando os Arquivos de Referencia
         List<FileContent> referenceFiles = LoadFiles(REFERENCES_FILES_PATH);
 
@@ -37,23 +37,22 @@ public class PlagiarismChecker {
         for (FileContent fc : referenceFiles) {
             RBTree<String> tree = new RBTree<>();
 
+            tree.insert(fc.getName());
             fc.getContent().forEach(tree::insert);
             referencesTrees.add(tree);
         }
 
-        PlagedFile plagedFile = new PlagedFile();
         for (int i = 0; i < userFile.getContent().size(); i++) {
-            for (RBTree<String> tree : referencesTrees) {
+            for (int j = 0; j < referencesTrees.size(); j++) {
                 String snippet = userFile.getContent().get(i);
+                RBTree<String> tree = referencesTrees.get(j);
                 if (!snippet.isEmpty() && tree.contains(snippet)) {
-                    plagedFile.setPlagiarismDocumentName(userFile.getName());
-                    plagedFile.setPlagiarismEnum(PlagiarismEnum.PLAGIARISM);
-                    plagedFile.setPlagiarismSnippet(snippet);
+                    return new PlagedFile(PlagiarismEnum.PLAGIARISM, snippet, referenceFiles.get(j).getName());
                 }
             }
         }
 
-       return plagedFile;
+       return new PlagedFile();
     }
 
     /**

@@ -13,8 +13,8 @@ public class Problem_2 {
 
     public static void main(String[] args) throws IOException {
 
-        ReportsGenerator.generate(PlagiarismChecker.RBTreeChecker(PLAGED_FILE_PATH, 5).toString(), "Verificador de Plagio (Arquivo Plageado)", ReportsGenerator.PROBLEM_2_REPORTS_PATH);
-        ReportsGenerator.generate(PlagiarismChecker.RBTreeChecker(EMPTY_FILE__PATH, 5).toString(), "Verificador de Plagio (Arquivo Vazio)", ReportsGenerator.PROBLEM_2_REPORTS_PATH);
-        ReportsGenerator.generate(PlagiarismChecker.RBTreeChecker(NOT_PLAGED_FILE_PATH, 5).toString(), "Verificador de Plagio (Arquivo Nao Plageado)", ReportsGenerator.PROBLEM_2_REPORTS_PATH);
+        ReportsGenerator.generate(PlagiarismChecker.RBTreeChecker(PLAGED_FILE_PATH).toString(), "Verificador de Plagio (Arquivo Plageado)", ReportsGenerator.PROBLEM_2_REPORTS_PATH);
+        ReportsGenerator.generate(PlagiarismChecker.RBTreeChecker(EMPTY_FILE__PATH).toString(), "Verificador de Plagio (Arquivo Vazio)", ReportsGenerator.PROBLEM_2_REPORTS_PATH);
+        ReportsGenerator.generate(PlagiarismChecker.RBTreeChecker(NOT_PLAGED_FILE_PATH).toString(), "Verificador de Plagio (Arquivo Nao Plageado)", ReportsGenerator.PROBLEM_2_REPORTS_PATH);
     }
 }

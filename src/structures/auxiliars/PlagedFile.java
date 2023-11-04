@@ -41,10 +41,11 @@ public class PlagedFile {
 
     @Override
     public String toString() {
-        return "PlagedFile: {" +
-                "Plágio: " + plagiarismEnum +
-                ", Trecho de Plágio: '" + plagiarismSnippet + '\'' +
-                ", Nome do Arquivo Plageado: '" + plagiarismDocumentName + '\'' +
-                '}';
+        if (plagiarismEnum.equals(PlagiarismEnum.PLAGIARISM)) {
+            return   "Plágio: " + plagiarismEnum + '\n' +
+                     "Trecho de Plágio: " + plagiarismSnippet + ", \n" +
+                     "Nome do Arquivo Plageado: " + plagiarismDocumentName;
+        }
+        return "Plágio: " + plagiarismEnum;
     }
 }

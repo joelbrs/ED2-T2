@@ -1,1 +1,1 @@
-PlagedFile: {Plágio: NOT_PLAGIARISM, Trecho de Plágio: 'null', Nome do Arquivo Plageado: 'null'}
+Plágio: NOT_PLAGIARISM
