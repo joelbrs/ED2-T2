@@ -14,7 +14,7 @@ import java.util.Scanner;
 
 public class PlagiarismChecker {
 
-    private final static String ORIGINAL_FILES_PATH = "src/reports/problem_2/problem/";
+    private final static String REFERENCES_FILES_PATH = "src/reports/problem_2/problem/";
 
     /**
      * RBTreeChecker
@@ -27,9 +27,34 @@ public class PlagiarismChecker {
      * @return PlagedFile representa uma estrutura de arquivo possivelmente plageado, onde possui um booleano para tal e o trecho de plagio
      * */
     public static PlagedFile RBTreeChecker(String path, Integer m) throws IOException {
-        System.out.println(LoadFiles(path));
+        // Carregando os Arquivos de Referencia
+        List<FileContent> referenceFiles = LoadFiles(REFERENCES_FILES_PATH);
 
-        return null;
+        // Carregando o Arquivo do Usuario
+        FileContent userFile = LoadFile(path);
+
+        List<RBTree<String>> referencesTrees = new ArrayList<>();
+        for (FileContent fc : referenceFiles) {
+            RBTree<String> tree = new RBTree<>();
+
+            fc.getContent().forEach(tree::insert);
+            referencesTrees.add(tree);
+        }
+
+        PlagedFile plagedFile = new PlagedFile();
+        for (int i = 0; i < userFile.getContent().size(); i++) {
+            for (RBTree<String> tree : referencesTrees) {
+                String snippet = userFile.getContent().get(i);
+                if (!snippet.isEmpty() && tree.contains(snippet)) {
+                    System.out.println(userFile.getContent().get(i));
+                    plagedFile.setPlagiarismDocumentName(userFile.getName());
+                    plagedFile.setPlagiarismEnum(PlagiarismEnum.PLAGIARISM);
+                    plagedFile.setPlagiarismSnippet(userFile.getContent().get(i));
+                }
+            }
+        }
+
+       return plagedFile;
     }
 
     /**
@@ -72,13 +97,13 @@ public class PlagiarismChecker {
         FileInputStream inputStream = new FileInputStream(paste.getAbsoluteFile());
         Scanner sc = new Scanner(inputStream);
 
-        FileContent f = new FileContent(paste.getAbsoluteFile().getName());
+        FileContent file = new FileContent(paste.getAbsoluteFile().getName());
         while (sc.hasNextLine()) {
-            f.addContent(sc.nextLine());
+            file.addContent(sc.nextLine());
         }
 
         sc.close();
         inputStream.close();
-        return f;
+        return file;
     }
 }

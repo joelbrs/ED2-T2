@@ -3,7 +3,7 @@ package structures.auxiliars;
 import structures.enums.PlagiarismEnum;
 
 public class PlagedFile {
-    private PlagiarismEnum plagiarismEnum;
+    private PlagiarismEnum plagiarismEnum = PlagiarismEnum.NOT_PLAGIARISM;
     private String plagiarismSnippet;
     private String plagiarismDocumentName;
 
