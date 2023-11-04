@@ -23,11 +23,11 @@ public class Problem_1 {
         Random random = new Random();
 
         for (int i = 1; i <= 8; i++) {
-            String chave = "chave" + i;
+            String key = "chave" + i;
             for (int j = 1; j <= 6; j++) {
-                int valor = random.nextInt(1000); // Gera um número aleatório entre 0 e 999
+                int value = random.nextInt(1000); // Gera um número aleatório entre 0 e 999
                 try {
-                    multiMap.put(chave, valor);
+                    multiMap.put(key, value);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

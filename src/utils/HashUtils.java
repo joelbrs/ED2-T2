@@ -58,7 +58,7 @@ public abstract class HashUtils {
      * */
     public double getLoadFactor(Object[] o, int length) {
         int sum = 0;
-        for (var item: o) {
+        for (var item : o) {
             if (item != null) {
                 sum++;
             }
