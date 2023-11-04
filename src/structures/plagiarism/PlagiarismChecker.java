@@ -43,9 +43,16 @@ public class PlagiarismChecker {
             RBTree<String> tree = new RBTree<>();
 
             for (int i = 0; i < fc.getContent().size() - m; i++) {
+
+                /**
+                 * Utilizamos o StringBuilder para concatenar as Strings e gerar uma sequencia de m palavras
+                 *
+                 * Fonte: https://www.tabnine.com/code/java/methods/java.lang.StringBuilder/append
+                 *
+                 * */
                 StringBuilder sb = new StringBuilder();
                 for (int j = 0; j < m; j++) {
-                    sb.append(fc.getContent().get(i + j)).append(" ");
+                    sb.append(fc.getContent().get(i + j));
                 }
                 tree.insert(sb.toString().trim());
             }
@@ -54,12 +61,17 @@ public class PlagiarismChecker {
 
         //Percorrendo a lista de conteúdos do Arquivo Verificado
         for (int i = 0; i < userFile.getContent().size() - m; i++) {
+
+            /**
+             * Repetimos a abordagem do String Builder a fim de gerar uma possivel String que sera comparada com que esta presente na Arvore Rubro-Negra
+             * */
             StringBuilder sb = new StringBuilder();
             for (int j = 0; j < m; j++) {
-                sb.append(userFile.getContent().get(i + j)).append(" ");
+                sb.append(userFile.getContent().get(i + j));
             }
             String snippet = sb.toString().trim();
 
+            // Iteramos em todas as arvores da Lista e verificamos se existe tal trecho em alguma delas
             for (int j = 0; j < referencesTrees.size(); j++) {
                 RBTree<String> tree = referencesTrees.get(j);
 
@@ -74,6 +86,9 @@ public class PlagiarismChecker {
 
     /**
      * LoadFiles
+     *
+     * Método responsável por carregar uma lista de arquivos a partir de um diretório especificado
+     * A partir dessa leitura, faz a chamada pro LoadFile (abaixo) pegando o camanho específico de cada arquivo
      *
      * @param directoryPath representa o caminho do diretorio de arquivos que sera lido
      * @return uma lista de arquivos lidos, com o seus nomes e seus conteudos
@@ -95,6 +110,11 @@ public class PlagiarismChecker {
     /**
      * LoadFile
      *
+     * Método responsável por carregar um único arquivo a partir de seu diretório especificado
+     *
+     * Utilizamos o seguinte fórum de discussão como base para a implementação desse método, mas realizamos algumas mudanças para suprir nossas necessidades
+     * Fonte: https://www.guj.com.br/t/manipulacao-de-arquivos-txt-em-java-eclipse/410313/6
+     *
      * @param filePath representa o caminho do arquivo que sera lido
      * @return o arquivo lido, o seu nome e seu conteudo em formato de Lista com cada palavra sepadara
      * */
@@ -109,6 +129,10 @@ public class PlagiarismChecker {
             throw new IOException("O diretório não possui nenhum arquivo para leitura");
         }
 
+        /**
+         * Escaneando cada palavra do arquivo (utilizando o RegEx para delimitar a partir dos espaços em branco)
+         * Fonte: https://cursos.alura.com.br/forum/topico-classe-scanner-delimitador-59273
+         * */
         FileInputStream inputStream = new FileInputStream(paste.getAbsoluteFile());
         Scanner sc = new Scanner(inputStream).useDelimiter("\\b+");
 
