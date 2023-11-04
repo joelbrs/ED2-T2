@@ -1,5 +1,10 @@
 package structures.plagiarism;
 
+import structures.auxiliars.FileContent;
+import structures.auxiliars.PlagedFile;
+import structures.enums.PlagiarismEnum;
+import structures.trees.RedBlack.RBTree;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -21,35 +26,59 @@ public class PlagiarismChecker {
      * @param m representa a quantidade de palavras iguais consecutivas que sera utilizado para verificacao de plagio
      * @return PlagedFile representa uma estrutura de arquivo possivelmente plageado, onde possui um booleano para tal e o trecho de plagio
      * */
-    public static void RBTreeChecker(String path, Integer m) throws IOException {
-        LoadFile(ORIGINAL_FILES_PATH).forEach(System.out::println);
+    public static PlagedFile RBTreeChecker(String path, Integer m) throws IOException {
+        System.out.println(LoadFiles(path));
+
+        return null;
     }
 
-    private static List<String> LoadFile(String path) throws IOException {
-        File paste = new File(path);
+    /**
+     * LoadFiles
+     *
+     * @param directoryPath representa o caminho do diretorio de arquivos que sera lido
+     * @return uma lista de arquivos lidos, com o seus nomes e seus conteudos
+     * */
+    private static List<FileContent> LoadFiles(String directoryPath) throws IOException {
+        File paste = new File(directoryPath);
         File[] files = paste.listFiles();
+        List<FileContent> filesContent = new ArrayList<>();
 
-        if (paste.exists()) {
-            if (paste.length() > 0) {
-                for (File file : files) {
-                    if (file.isFile()) {
-                        FileInputStream inputStream = new FileInputStream(file);
-                        Scanner scanner = new Scanner(inputStream);
-                        List<String> texts = new ArrayList<>();
-
-                        System.out.println("Reading File: " + file.getName());
-                        while (scanner.hasNextLine()) {
-                            texts.add(scanner.nextLine());
-                        }
-
-                        scanner.close();
-                        inputStream.close();
-                        return texts;
-                    }
-                }
+        if (files != null) {
+            for (File file : files) {
+                filesContent.add(LoadFile(file.getPath()));
             }
+            return filesContent;
+        }
+        throw new NullPointerException("Diretorio Vazio!");
+    }
+
+    /**
+     * LoadFile
+     *
+     * @param filePath representa o caminho do arquivo que sera lido
+     * @return o arquivo lido, o seu nome e seu conteudo
+     * */
+    private static FileContent LoadFile(String filePath) throws IOException {
+        File paste = new File(filePath);
+
+        if (!paste.exists()) {
+            throw new IOException("Esse diretório não existe!");
+        }
+
+        if (paste.length() <= 0) {
             throw new IOException("O diretório não possui nenhum arquivo para leitura");
         }
-        throw new IOException("Esse diretório não existe!");
+
+        FileInputStream inputStream = new FileInputStream(paste.getAbsoluteFile());
+        Scanner sc = new Scanner(inputStream);
+
+        FileContent f = new FileContent(paste.getAbsoluteFile().getName());
+        while (sc.hasNextLine()) {
+            f.addContent(sc.nextLine());
+        }
+
+        sc.close();
+        inputStream.close();
+        return f;
     }
 }
