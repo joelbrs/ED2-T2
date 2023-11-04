@@ -46,10 +46,9 @@ public class PlagiarismChecker {
             for (RBTree<String> tree : referencesTrees) {
                 String snippet = userFile.getContent().get(i);
                 if (!snippet.isEmpty() && tree.contains(snippet)) {
-                    System.out.println(userFile.getContent().get(i));
                     plagedFile.setPlagiarismDocumentName(userFile.getName());
                     plagedFile.setPlagiarismEnum(PlagiarismEnum.PLAGIARISM);
-                    plagedFile.setPlagiarismSnippet(userFile.getContent().get(i));
+                    plagedFile.setPlagiarismSnippet(snippet);
                 }
             }
         }
