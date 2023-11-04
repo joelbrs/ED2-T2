@@ -10,8 +10,9 @@ import static structures.enums.RBColorEnum.*;
  * Implementação do Nó de uma Árvore Rubro-Negra e de suas propriedades
  *
  * Adaptamos um código pré-existente para suprir nossas necessidades
+ * Fonte: https://github.com/iamareebjamal/RedBlackTree-GUI/blob/master/src/areeb/trees/rbt/RBNode.java
  * */
-public class RBNode<T extends Comparable<T>> { //Fonte: https://github.com/iamareebjamal/RedBlackTree-GUI/blob/master/src/areeb/trees/rbt/RBNode.java
+public class RBNode<T extends Comparable<T>> {
     private RBColorEnum color = RED;
     private RBNode<T> left;
     private RBNode<T> right;

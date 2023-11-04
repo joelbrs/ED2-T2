@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Classe Base para Controle dos Arquivos Lidos na Verificação de Plágio, contendo seu nome e seu conteúdo
+ *
+ * */
 public class FileContent implements Comparable<FileContent> {
     private String name;
     private List<String> content = new ArrayList<>();

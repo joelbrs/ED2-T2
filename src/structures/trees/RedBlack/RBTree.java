@@ -9,8 +9,9 @@ import structures.enums.RBColorEnum;
  * Implementação de uma Árvore Rubro-Negra e de suas propriedades
  *
  * Adaptamos um código pré-existente para suprir nossas necessidades
+ * Fonte: https://github.com/iamareebjamal/RedBlackTree-GUI/blob/master/src/areeb/trees/rbt/RedBlackTree.java
  * */
-public class RBTree<T extends Comparable<T>> { //Fonte: https://github.com/iamareebjamal/RedBlackTree-GUI/blob/master/src/areeb/trees/rbt/RedBlackTree.java
+public class RBTree<T extends Comparable<T>> {
     protected RBNode<T> root;
     protected int size = 0;
 

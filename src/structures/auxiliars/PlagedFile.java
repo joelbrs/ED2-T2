@@ -2,6 +2,10 @@ package structures.auxiliars;
 
 import structures.enums.PlagiarismEnum;
 
+/**
+ * Classe de Controle de Plágios, contendo: Se é plágio ou não, o trecho de plágio e o nome do documento que foi plageado
+ *
+ * */
 public class PlagedFile {
     private PlagiarismEnum plagiarismEnum = PlagiarismEnum.NOT_PLAGIARISM;
     private String plagiarismSnippet;

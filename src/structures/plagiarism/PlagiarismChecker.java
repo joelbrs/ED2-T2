@@ -23,7 +23,6 @@ public class PlagiarismChecker {
      *
      *
      * @param path representa o caminho dos arquivos que o usuario quer verificar o plagio
-     * @param m representa a quantidade de palavras iguais consecutivas que sera utilizado para verificacao de plagio
      * @return PlagedFile representa uma estrutura de arquivo possivelmente plageado, onde possui um booleano para tal e o trecho de plagio
      * */
     public static PlagedFile RBTreeChecker(String path) throws IOException {
@@ -33,6 +32,11 @@ public class PlagiarismChecker {
         // Carregando o Arquivo do Usuario
         FileContent userFile = LoadFile(path);
 
+        /*
+         * Criamos uma lista de Árvores Rubro-Negras em que, cada uma, contém, os conteúdos dos Arquivos de Referência
+         *
+         * Em seguida, adicionamos esses conteúdos às devidas árvores antes de inserir na lista
+         * */
         List<RBTree<String>> referencesTrees = new ArrayList<>();
         for (FileContent fc : referenceFiles) {
             RBTree<String> tree = new RBTree<>();
@@ -42,10 +46,17 @@ public class PlagiarismChecker {
             referencesTrees.add(tree);
         }
 
+
+        //Percorrendo a lista de conteúdos do Arquivo Verificado
         for (int i = 0; i < userFile.getContent().size(); i++) {
+            // Percorrendo cada uma das árvores da Lista de Árvores Rubro-Negras criadas anteriormente
             for (int j = 0; j < referencesTrees.size(); j++) {
+
+                // Salvamos as referências do trecho atual e da árvore atual em variáveis
                 String snippet = userFile.getContent().get(i);
                 RBTree<String> tree = referencesTrees.get(j);
+
+                // Verificamos se o trecho não está vazio e se a árvore possui o respectivo trecho
                 if (!snippet.isEmpty() && tree.contains(snippet)) {
                     return new PlagedFile(PlagiarismEnum.PLAGIARISM, snippet, referenceFiles.get(j).getName());
                 }
