@@ -1,6 +1,6 @@
 package problems;
 
-import structures.plagiarism.PlagiarismChecker;
+import structures.checkers.PlagiarismChecker;
 import utils.ReportsGenerator;
 
 public class Problem_2 {

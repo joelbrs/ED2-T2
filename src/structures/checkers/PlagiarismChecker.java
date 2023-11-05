@@ -1,4 +1,4 @@
-package structures.plagiarism;
+package structures.checkers;
 
 import structures.auxiliars.FileContent;
 import structures.auxiliars.PlagedFile;
@@ -26,6 +26,7 @@ public class PlagiarismChecker {
      * @return PlagedFile representa uma estrutura de arquivo possivelmente plageado, onde possui um booleano para tal e o trecho de plagio
      * */
     public static PlagedFile RBTreeChecker(String path, Integer m) throws IOException {
+        Long startTime = System.currentTimeMillis();
         // Carregando os Arquivos de Referencia
         List<FileContent> referenceFiles = FilesUtils.LoadFiles(REFERENCES_FILES_PATH);
 
@@ -75,15 +76,29 @@ public class PlagiarismChecker {
                 RBTree<String> tree = referencesTrees.get(j);
 
                 if (!snippet.isEmpty() && tree.contains(snippet)) {
-                    return new PlagedFile(PlagiarismEnum.PLAGIARISM, snippet, referenceFiles.get(j).getName());
+                    return new PlagedFile(PlagiarismEnum.PLAGIARISM, snippet, referenceFiles.get(j).getName(), System.currentTimeMillis() - startTime);
                 }
             }
         }
 
-        return new PlagedFile();
+        return new PlagedFile(System.currentTimeMillis() - startTime);
     }
 
+    /**
+     * MultiMapChecker
+     *
+     * Implementação de Verificador de Plágio através de HashTable (no caso, utilizei o MultiMap dinamico desenvolvido p/ o primeiro problema
+     *
+     * OBS.: Implementacao seguindo a mesma linha que da Arvore Rubro-Negra
+     *
+     *
+     * @param path representa o caminho dos arquivos que o usuario quer verificar o plagio
+     * @param m representa a quantidade de palavras consecutivas a serem levadas em consideração para classificação de plágio
+     * @return PlagedFile representa uma estrutura de arquivo possivelmente plageado, onde possui um booleano para tal e o trecho de plagio
+     * */
     public static PlagedFile MultiMapChecker(String path, Integer m) throws Exception {
+        Long startTime = System.currentTimeMillis();
+
         // Carregando os Arquivos de Referencia
         List<FileContent> referenceFiles = FilesUtils.LoadFiles(REFERENCES_FILES_PATH);
 
@@ -108,7 +123,7 @@ public class PlagiarismChecker {
         for (int i = 0; i < userFile.getContent().size() - m; i++) {
 
             /**
-             * Repetimos a abordagem do String Builder a fim de gerar uma possivel String que sera comparada com que esta presente na Arvore Rubro-Negra
+             * Repetimos a abordagem do String Builder a fim de gerar uma possivel String que sera comparada com que esta presente no HashTable
              * */
             StringBuilder sb = new StringBuilder();
             for (int j = 0; j < m; j++) {
@@ -116,7 +131,7 @@ public class PlagiarismChecker {
             }
             String snippet = sb.toString().trim();
 
-            // Iteramos em todas as arvores da Lista e verificamos se existe tal trecho em alguma delas
+            // Iteramos em todos os hashs da Lista e verificamos se existe tal trecho em alguma delas
             for (int j = 0; j < referencesHash.size(); j++) {
                 MultiMap<String, String> hash = referencesHash.get(j);
 
@@ -124,14 +139,13 @@ public class PlagiarismChecker {
                     Object[] arr = hash.findAll(referenceFiles.get(j).getName());
                     for (Object str : arr) {
                         if (str != null && str.equals(snippet)) {
-                            return new PlagedFile(PlagiarismEnum.PLAGIARISM, snippet, referenceFiles.get(j).getName());
+                            return new PlagedFile(PlagiarismEnum.PLAGIARISM, snippet, referenceFiles.get(j).getName(), System.currentTimeMillis() - startTime);
                         }
                     }
                 }
             }
         }
 
-        return new PlagedFile();
+        return new PlagedFile(System.currentTimeMillis() - startTime);
     }
-
 }
