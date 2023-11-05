@@ -10,37 +10,19 @@ public class PlagedFile {
     private PlagiarismEnum plagiarismEnum = PlagiarismEnum.NOT_PLAGIARISM;
     private String plagiarismSnippet;
     private String plagiarismDocumentName;
+    private Long executionTime;
 
     public PlagedFile() {}
 
-    public PlagedFile(PlagiarismEnum plagiarismEnum, String plagiarismSnippet, String plagiarismDocumentName) {
+    public PlagedFile(Long executionTime) {
+        this.executionTime = executionTime;
+    }
+
+    public PlagedFile(PlagiarismEnum plagiarismEnum, String plagiarismSnippet, String plagiarismDocumentName, Long executionTime) {
         this.plagiarismEnum = plagiarismEnum;
         this.plagiarismSnippet = plagiarismSnippet;
         this.plagiarismDocumentName = plagiarismDocumentName;
-    }
-
-    public PlagiarismEnum getPlagiarismEnum() {
-        return plagiarismEnum;
-    }
-
-    public void setPlagiarismEnum(PlagiarismEnum plagiarismEnum) {
-        this.plagiarismEnum = plagiarismEnum;
-    }
-
-    public String getPlagiarismSnippet() {
-        return plagiarismSnippet;
-    }
-
-    public void setPlagiarismSnippet(String plagiarismSnippet) {
-        this.plagiarismSnippet = plagiarismSnippet;
-    }
-
-    public String getPlagiarismDocumentName() {
-        return plagiarismDocumentName;
-    }
-
-    public void setPlagiarismDocumentName(String plagiarismDocumentName) {
-        this.plagiarismDocumentName = plagiarismDocumentName;
+        this.executionTime = executionTime;
     }
 
     @Override
@@ -48,8 +30,10 @@ public class PlagedFile {
         if (plagiarismEnum.equals(PlagiarismEnum.PLAGIARISM)) {
             return   "Plágio: " + plagiarismEnum + '\n' +
                      "Trecho de Plágio: " + plagiarismSnippet + ", \n" +
-                     "Nome do Arquivo Plageado: " + plagiarismDocumentName;
+                     "Nome do Arquivo Plageado: " + plagiarismDocumentName + ", \n" +
+                     "Tempo de Execução (em milissegundos): " + executionTime + "ms";
         }
-        return "Plágio: " + plagiarismEnum;
+        return "Plágio: " + plagiarismEnum + ", \n" +
+                "Tempo de Execução (em milissegundos): " + executionTime + "ms";
     }
 }
