@@ -13,7 +13,7 @@ import java.util.List;
 
 public class PlagiarismChecker {
 
-    private final static String REFERENCES_FILES_PATH = "src/reports/problem_2/problem/";
+    private final static String REFERENCES_FILES_PATH = "src/reports/problem_2/references/";
 
     /**
      * RBTreeChecker

@@ -1,2 +1,2 @@
 Plágio: NOT_PLAGIARISM, 
-Tempo de Execução (em milissegundos): 88ms
+Tempo de Execução (em milissegundos): 81ms

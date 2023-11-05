@@ -170,9 +170,9 @@ public class MultiMap<TKey, TValue> extends HashUtils {
 
     @Override
     public String toString() {
-        return  "MultiMap: {"
-                + "Length: " + pairs.length
-                + ", Pairs: " + Arrays.toString(pairs)
-                + '}';
+        return  "MultiMap: {" + "\n" +
+                "  " + "Tamanho da Hash: " + pairs.length + "\n" +
+                "  " + "Pares: " + Arrays.toString(pairs) + "\n" +
+                '}';
     }
 }

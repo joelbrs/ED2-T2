@@ -126,10 +126,10 @@ public class KeyValuePair<TKey, TValue> extends HashUtils {
 
     @Override
     public String toString() {
-        return "\nKeyValuePair: {" +
-                "Key: " + key +
-                ", Length: " + values.length +
-                ", Values: " + Arrays.toString(values) +
-                '}';
+        return  "\n" + "  " + "Par: {" + '\n' +
+                "    " + "Key: " + key + ",\n" +
+                "    " + "Tamanho da Tabela Hash: " + values.length +  ",\n" +
+                "    " + "Valores: " + Arrays.toString(values)+ "\n" +
+                "  " + "}";
     }
 }
