@@ -14,13 +14,4 @@ public enum PlagiarismEnum {
     public boolean getCode() {
         return code;
     }
-
-    public PlagiarismEnum valueOf(Boolean code) throws Exception {
-        for (PlagiarismEnum e : values()) {
-            if (e.getCode() == code) {
-                return e;
-            }
-        }
-        throw new Exception("Enum não encontrado para o código refernciado!");
-    }
 }

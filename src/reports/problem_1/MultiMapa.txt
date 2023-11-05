@@ -4,41 +4,41 @@ MultiMap: {
   Par: {
     Key: chave8,
     Tamanho da Tabela Hash: 8,
-    Valores: [632, 603, 361, 685, null, null, 378, 258]
+    Valores: [122, 640, 141, 169, null, null, 805, 719]
   }, 
   Par: {
     Key: chave7,
     Tamanho da Tabela Hash: 8,
-    Valores: [254, 397, 964, 259, 453, null, null, 302]
+    Valores: [707, 429, 977, 177, 31, null, null, 484]
   }, 
   Par: {
     Key: chave6,
     Tamanho da Tabela Hash: 8,
-    Valores: [697, 204, 209, 881, 845, 109, null, null]
+    Valores: [249, 768, 919, 545, 930, 237, null, null]
   }, 
   Par: {
     Key: chave5,
     Tamanho da Tabela Hash: 8,
-    Valores: [null, 525, 167, 737, 368, 426, 658, null]
+    Valores: [null, 210, 34, 115, 49, 523, 85, null]
   }, 
   Par: {
     Key: chave4,
     Tamanho da Tabela Hash: 8,
-    Valores: [null, null, 998, 600, 227, 929, 63, 19]
+    Valores: [null, null, 989, 375, 29, 779, 451, 972]
   }, 
   Par: {
     Key: chave3,
     Tamanho da Tabela Hash: 8,
-    Valores: [745, null, null, 968, 314, 142, 486, 592]
+    Valores: [109, null, null, 807, 277, 482, 656, 340]
   }, 
   Par: {
     Key: chave2,
     Tamanho da Tabela Hash: 8,
-    Valores: [68, 57, null, null, 593, 675, 404, 913]
+    Valores: [853, 318, null, null, 216, 680, 447, 699]
   }, 
   Par: {
     Key: chave1,
     Tamanho da Tabela Hash: 8,
-    Valores: [830, 347, 601, null, null, 52, 388, 881]
+    Valores: [263, 336, 248, null, null, 508, 719, 327]
   }, null, null, null, null, null]
 }
