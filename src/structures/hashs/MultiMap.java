@@ -1,4 +1,4 @@
-package structures.maps;
+package structures.hashs;
 
 import structures.auxiliars.KeyValuePair;
 import utils.HashUtils;
@@ -19,6 +19,7 @@ public class MultiMap<TKey, TValue> extends HashUtils {
 
     //Lista de pares de chave-valor (representação da Hash Table)
     private KeyValuePair[] pairs;
+    private Boolean uniqueValue = Boolean.TRUE;
 
     public MultiMap() {
         this.pairs = new KeyValuePair[HashTableControl.DEFAULT_LENGTH];
@@ -28,6 +29,10 @@ public class MultiMap<TKey, TValue> extends HashUtils {
         this.pairs = new KeyValuePair[length];
     }
 
+    public MultiMap(Boolean uniqueValue) {
+        this.uniqueValue = uniqueValue;
+        this.pairs = new KeyValuePair[HashTableControl.DEFAULT_LENGTH];
+    }
     /**
      * Put
      * Insere um valor associado a uma chave no MultiMapa
@@ -81,7 +86,7 @@ public class MultiMap<TKey, TValue> extends HashUtils {
 
                 //Verificando se existe alguma chave na posição encontrada
                 if (pairs[index] != null) {
-                    pairs[index].put(value, index);
+                    pairs[index].put(value, index, uniqueValue);
                     return;
                 }
             }
@@ -89,7 +94,7 @@ public class MultiMap<TKey, TValue> extends HashUtils {
             /* caso não tenha elemento inserido na posição inicial de inserção, criamos um novo par de chave-valor,
              * inserindo o valor em sua lista de valores
              * **/
-            pairs[index] = new KeyValuePair(key, value, index);
+            pairs[index] = new KeyValuePair(key, value, index, uniqueValue);
             return;
         }
         throw new IllegalArgumentException("A chave e o valor não podem ser nulos!");
@@ -142,11 +147,11 @@ public class MultiMap<TKey, TValue> extends HashUtils {
         for (int i = 0; i < pairs.length; i++) {
             if (pairs[i] != null) {
                 // Calculando o novo índice para o par chave-valor
-                int index = getIndexByHashFunction((TKey) pairs[i].getKey(), newLength);
+                int index = getIndexByHashFunction(pairs[i].getKey(), newLength);
 
                 // Tratando colisões usando sondagem linear
                 while (newPairs[index] != null) {
-                    index = getIndexByHashFunction((TKey) pairs[i].getKey(), newLength, increment);
+                    index = getIndexByHashFunction(pairs[i].getKey(), newLength, increment);
                     increment++;
                 }
 

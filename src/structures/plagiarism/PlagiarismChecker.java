@@ -3,6 +3,7 @@ package structures.plagiarism;
 import structures.auxiliars.FileContent;
 import structures.auxiliars.PlagedFile;
 import structures.enums.PlagiarismEnum;
+import structures.hashs.MultiMap;
 import structures.trees.RedBlack.RBTree;
 
 import java.io.File;
@@ -15,6 +16,57 @@ import java.util.Scanner;
 public class PlagiarismChecker {
 
     private final static String REFERENCES_FILES_PATH = "src/reports/problem_2/problem/";
+
+    public static PlagedFile MultiMapChecker(String path, Integer m) throws Exception {
+        // Carregando os Arquivos de Referencia
+        List<FileContent> referenceFiles = LoadFiles(REFERENCES_FILES_PATH);
+
+        // Carregando o Arquivo do Usuario
+        FileContent userFile = LoadFile(path);
+
+        List<MultiMap<String, String>> referencesHash = new ArrayList<>();
+        for (FileContent fc : referenceFiles) {
+            MultiMap<String, String> hash = new MultiMap<>(Boolean.FALSE);
+
+            for (int i = 0; i < fc.getContent().size() - m; i++) {
+                StringBuilder sb = new StringBuilder();
+                for (int j = 0; j < m; j++) {
+                    sb.append(fc.getContent().get(i + j));
+                }
+                hash.put(fc.getName(), sb.toString().trim());
+            }
+            referencesHash.add(hash);
+        }
+
+        //Percorrendo a lista de conteúdos do Arquivo Verificado
+        for (int i = 0; i < userFile.getContent().size() - m; i++) {
+
+            /**
+             * Repetimos a abordagem do String Builder a fim de gerar uma possivel String que sera comparada com que esta presente na Arvore Rubro-Negra
+             * */
+            StringBuilder sb = new StringBuilder();
+            for (int j = 0; j < m; j++) {
+                sb.append(userFile.getContent().get(i + j));
+            }
+            String snippet = sb.toString().trim();
+
+            // Iteramos em todas as arvores da Lista e verificamos se existe tal trecho em alguma delas
+            for (int j = 0; j < referencesHash.size(); j++) {
+                MultiMap<String, String> hash = referencesHash.get(j);
+
+                if (!snippet.isEmpty()) {
+                    Object[] arr = hash.findAll(referenceFiles.get(j).getName());
+                    for (Object str : arr) {
+                        if (str != null && str.equals(snippet)) {
+                            return new PlagedFile(PlagiarismEnum.PLAGIARISM, snippet, referenceFiles.get(j).getName());
+                        }
+                    }
+                }
+            }
+        }
+
+        return new PlagedFile();
+    }
 
     /**
      * RBTreeChecker
