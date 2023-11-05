@@ -3,8 +3,6 @@ package problems;
 import structures.plagiarism.PlagiarismChecker;
 import utils.ReportsGenerator;
 
-import java.io.IOException;
-
 public class Problem_2 {
     /**
      * Você foi contratado para desenvolver um verificador de plágio online, que permite que
@@ -26,11 +24,16 @@ public class Problem_2 {
     private static final String EMPTY_FILE_PATH = "src/reports/problem_2/solution/EmptyFile.txt";
     private static final String NOT_PLAGED_FILE_PATH = "src/reports/problem_2/solution/DifferenteFileLoremIpsum.txt";
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
+
+        // Resultados da Implementação com HashTable
+        ReportsGenerator.generate(PlagiarismChecker.MultiMapChecker(PLAGED_FILE_PATH, 40).toString(), "Verificador de Plágio HashTable (Arquivo Plageado)", ReportsGenerator.PROBLEM_2_REPORTS_PATH);
+        ReportsGenerator.generate(PlagiarismChecker.MultiMapChecker(EMPTY_FILE_PATH, 9).toString(), "Verificador de Plágio HashTable (Arquivo Vazio)", ReportsGenerator.PROBLEM_2_REPORTS_PATH);
+        ReportsGenerator.generate(PlagiarismChecker.MultiMapChecker(NOT_PLAGED_FILE_PATH, 900).toString(), "Verificador de Plágio HashTable (Arquivo Não Plageado)", ReportsGenerator.PROBLEM_2_REPORTS_PATH);
 
         // Resultados da Implementação com Árvore Rubro-Negra
-        ReportsGenerator.generate(PlagiarismChecker.RBTreeChecker(PLAGED_FILE_PATH, 40).toString(), "Verificador de Plágio (Arquivo Plageado)", ReportsGenerator.PROBLEM_2_REPORTS_PATH);
-        ReportsGenerator.generate(PlagiarismChecker.RBTreeChecker(EMPTY_FILE_PATH, 9).toString(), "Verificador de Plágio (Arquivo Vazio)", ReportsGenerator.PROBLEM_2_REPORTS_PATH);
-        ReportsGenerator.generate(PlagiarismChecker.RBTreeChecker(NOT_PLAGED_FILE_PATH, 900).toString(), "Verificador de Plágio (Arquivo Não Plageado)", ReportsGenerator.PROBLEM_2_REPORTS_PATH);
+        ReportsGenerator.generate(PlagiarismChecker.RBTreeChecker(PLAGED_FILE_PATH, 40).toString(), "Verificador de Plágio RBTree (Arquivo Plageado)", ReportsGenerator.PROBLEM_2_REPORTS_PATH);
+        ReportsGenerator.generate(PlagiarismChecker.RBTreeChecker(EMPTY_FILE_PATH, 9).toString(), "Verificador de Plágio RBTree (Arquivo Vazio)", ReportsGenerator.PROBLEM_2_REPORTS_PATH);
+        ReportsGenerator.generate(PlagiarismChecker.RBTreeChecker(NOT_PLAGED_FILE_PATH, 900).toString(), "Verificador de Plágio RBTree (Arquivo Não Plageado)", ReportsGenerator.PROBLEM_2_REPORTS_PATH);
     }
 }

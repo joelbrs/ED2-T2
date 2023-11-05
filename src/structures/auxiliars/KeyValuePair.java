@@ -16,7 +16,7 @@ import java.util.*;
 public class KeyValuePair<TKey, TValue> extends HashUtils {
 
     // Referência para a chave
-    private TKey key;
+    private final TKey key;
 
     // Referência para os valores associados a essa chave em formato de array
     private TValue[] values;
@@ -28,9 +28,9 @@ public class KeyValuePair<TKey, TValue> extends HashUtils {
     }
 
     // Construtor
-    public KeyValuePair(TKey key, TValue value, int index) throws Exception {
+    public KeyValuePair(TKey key, TValue value, int index, boolean uniqueValue) throws Exception {
         this(key);
-        this.put(value, index);
+        this.put(value, index, uniqueValue);
     }
 
     // Construtor
@@ -56,8 +56,8 @@ public class KeyValuePair<TKey, TValue> extends HashUtils {
      * @param index representa a posição da Tabela Hash em que esse valor será inserido
      * @throws Exception se o valor já existir
      * */
-    public void put(TValue value, int index) throws Exception {
-        if (this.contains(value)) {
+    public void put(TValue value, int index, boolean uniqueValue) throws Exception {
+        if (uniqueValue && this.contains(value)) {
             throw new Exception("O valor já está associado à chave!");
         }
 
