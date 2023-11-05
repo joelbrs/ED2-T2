@@ -35,9 +35,9 @@ public class Problem_1 {
         }
 
         ReportsGenerator.generate(multiMap.toString(), "MultiMapa", ReportsGenerator.PROBLEM_1_REPORTS_PATH);
-        ReportsGenerator.generate(Arrays.toString(multiMap.findAll("chave1")), "PairKeyValue, Key: Chave1", ReportsGenerator.PROBLEM_1_REPORTS_PATH);
-        ReportsGenerator.generate(Arrays.toString(multiMap.findAll("chave5")), "PairKeyValue, Key: Chave5", ReportsGenerator.PROBLEM_1_REPORTS_PATH);
-        ReportsGenerator.generate(Arrays.toString(multiMap.findAll("chave4")), "PairKeyValue, Key: Chave4", ReportsGenerator.PROBLEM_1_REPORTS_PATH);
-        ReportsGenerator.generate(Arrays.toString(multiMap.findAll("chave15")), "PairKeyValue, Key: Chave15", ReportsGenerator.PROBLEM_1_REPORTS_PATH);
+        ReportsGenerator.generate(Arrays.toString(multiMap.findAll("chave1")), "Valores da Key: Chave1", ReportsGenerator.PROBLEM_1_REPORTS_PATH);
+        ReportsGenerator.generate(Arrays.toString(multiMap.findAll("chave5")), "Valores da Key: Chave5", ReportsGenerator.PROBLEM_1_REPORTS_PATH);
+        ReportsGenerator.generate(Arrays.toString(multiMap.findAll("chave4")), "Valores da Key: Chave4", ReportsGenerator.PROBLEM_1_REPORTS_PATH);
+        ReportsGenerator.generate(Arrays.toString(multiMap.findAll("chave15")), "Valores da Key: Chave15", ReportsGenerator.PROBLEM_1_REPORTS_PATH);
     }
 }

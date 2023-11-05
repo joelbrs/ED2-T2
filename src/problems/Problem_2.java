@@ -20,9 +20,9 @@ public class Problem_2 {
      *
      * */
 
-    private static final String PLAGED_FILE_PATH = "src/reports/problem_2/solution/PlagedFileLoremIpsum.txt";
-    private static final String EMPTY_FILE_PATH = "src/reports/problem_2/solution/EmptyFile.txt";
-    private static final String NOT_PLAGED_FILE_PATH = "src/reports/problem_2/solution/DifferenteFileLoremIpsum.txt";
+    private static final String PLAGED_FILE_PATH = "src/reports/problem_2/files/PlagedFileLoremIpsum.txt";
+    private static final String EMPTY_FILE_PATH = "src/reports/problem_2/files/EmptyFile.txt";
+    private static final String NOT_PLAGED_FILE_PATH = "src/reports/problem_2/files/DifferenteFileLoremIpsum.txt";
 
     public static void main(String[] args) throws Exception {
 
